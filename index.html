@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>DataMind AI – Data Analyst</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f1fb;--card:#fff;--tx:#2b2a3a;--mut:#7b7891;--pri:#7c6cf0;--pri2:#5ec2d6;--ok:#34c38f;--bad:#f06a7c;--bd:#e8e4f5}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#15141f;--card:#201f2e;--tx:#ecebf7;--mut:#9c9ab5;--bd:#2f2e45}}
+:root[data-theme=dark]{--bg:#15141f;--card:#201f2e;--tx:#ecebf7;--mut:#9c9ab5;--bd:#2f2e45}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box;scrollbar-width:none}*::-webkit-scrollbar{display:none}html,body{overflow-x:hidden}body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}input{-webkit-user-select:text;user-select:text}body{margin:0;background:var(--bg);color:var(--tx);font-family:Poppins,system-ui,sans-serif;min-height:100vh}
+body:before,body:after{content:"";position:fixed;width:340px;height:340px;border-radius:50%;filter:blur(80px);opacity:.3;z-index:0;animation:fl 12s ease-in-out infinite;pointer-events:none}
+body:before{background:var(--pri);top:-80px;left:-80px}body:after{background:var(--pri2);bottom:-80px;right:-80px;animation-delay:-6s}
+@keyframes fl{50%{transform:translate(40px,30px)}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.screen{display:none;position:relative;z-index:1;padding:18px;max-width:1280px;margin:auto;animation:up .6s both}.screen.on{display:block}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:18px;box-shadow:0 10px 30px rgba(124,108,240,.10)}
+.rv{animation:up .6s both}
+.logo{font-weight:700;font-size:21px;background:linear-gradient(90deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#auth{max-width:420px;padding-top:7vh}#up{max-width:760px}
+.tabs{display:flex;background:var(--bg);border-radius:14px;padding:4px;margin:16px 0}
+.tabs button{flex:1;border:0;background:none;padding:10px;border-radius:11px;color:var(--mut);font:inherit;cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--pri);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+input,select{width:100%;padding:10px 12px;margin:5px 0;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit}
+input:focus{outline:2px solid var(--pri)}input[type=checkbox]{width:auto}
+.btn{border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:600;color:#fff;background:linear-gradient(90deg,var(--pri),var(--pri2));cursor:pointer;transition:.25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(124,108,240,.35)}.btn.full{width:100%;margin-top:8px}
+.btn.ghost{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.err{color:var(--bad);font-size:13px;min-height:18px}.mut{color:var(--mut);font-size:13px}
+#drop{border:2px dashed var(--pri);border-radius:22px;padding:44px 16px;text-align:center;cursor:pointer;transition:.3s;margin-top:14px}
+#drop:hover,#drop.h{background:rgba(124,108,240,.08)}#drop .ic{font-size:46px;animation:fl 4s infinite}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);gap:16px;align-items:start}main{min-width:0}
+.side{position:static}
+@media(max-width:850px){.app{grid-template-columns:minmax(0,1fr)}.side{position:static;max-height:none}.screen{padding:12px}}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.nav button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);padding:7px 11px;border-radius:999px;font:inherit;font-size:12.5px;cursor:pointer;transition:.2s}
+.nav button:hover{transform:translateY(-2px)}.nav button.on{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;border-color:transparent}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi span{font-size:12.5px;color:var(--mut)}.kpi b{display:block;font-size:clamp(17px,2vw,22px);margin-top:3px;overflow-wrap:anywhere;line-height:1.25}
+.up{color:var(--ok)}.dn{color:var(--bad)}
+.cg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}
+@media(max-width:850px){.cg{grid-template-columns:minmax(0,1fr)}}
+.cc{cursor:pointer;transition:.25s;min-width:0;overflow:hidden}.cc.sel{outline:2px solid var(--pri);transform:translateY(-3px)}
+.cw{position:relative;height:250px;margin-top:8px}
+.sw{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0}.sw button{width:44px;height:28px;border-radius:9px;border:2px solid transparent;cursor:pointer}
+.sw button.on{border-color:var(--tx);transform:scale(1.1)}
+table{width:100%;border-collapse:collapse;font-size:14px}td{padding:8px 6px;border-bottom:1px solid var(--bd)}td:last-child{text-align:right;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:850px){.two{grid-template-columns:1fr}}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.res{font-size:22px;font-weight:700;margin-top:8px;background:linear-gradient(90deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#md,#gen{position:fixed;inset:0;z-index:50;background:rgba(20,18,40,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+#md.on,#gen.on{display:flex}#mb{max-width:480px;width:100%;max-height:90vh;overflow:auto;animation:pop .4s both}
+#gen{flex-direction:column;color:#fff;text-align:center;background:rgba(20,18,40,.88)}
+.ring{width:70px;height:70px;border-radius:50%;border:6px solid rgba(255,255,255,.2);border-top-color:var(--pri2);animation:spin 1s linear infinite}
+.bar{width:260px;height:8px;background:rgba(255,255,255,.2);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .5s}
+.scan{position:relative;width:90px;height:110px;margin:14px auto;border:3px solid var(--pri);border-radius:12px;overflow:hidden;background:repeating-linear-gradient(var(--bd) 0 6px,transparent 6px 16px)}.scan:after{content:"";position:absolute;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--pri),var(--pri2));box-shadow:0 0 16px var(--pri2);animation:sc 1.2s ease-in-out infinite alternate}@keyframes sc{from{top:0}to{top:calc(100% - 5px)}}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;background:var(--bg);margin:2px}
+ul.sm{padding-left:18px;line-height:1.7;font-size:14px}
+</style></head><body>
+
+<section id="auth" class="screen on"><div class="card">
+<div class="logo">✨ DataMind AI</div><div class="mut">Your smart data analyst – upload a file, get insights.</div>
+<div class="tabs"><button id="tL" class="on">Login</button><button id="tR">Register</button></div>
+<input id="nm" placeholder="Full name" style="display:none"><input id="em" type="email" placeholder="Email"><input id="pw" type="password" placeholder="Password">
+<div class="err" id="er"></div><button class="btn full" id="go">Login</button>
+<p class="mut" style="margin-bottom:0">Demo only: accounts and data are saved in this browser (not real security).</p></div></section>
+
+<section id="up" class="screen"><div class="top"><div class="logo">✨ DataMind AI</div><div><span class="mut" id="who"></span> <button class="btn ghost" onclick="out()">Logout</button></div></div>
+<div class="card"><h2 style="margin:0">Upload your data</h2><div class="mut">Excel (.xlsx/.xls), CSV, TXT or PDF. Any layout works: tables, headers and numeric columns are detected automatically. Messy data is reported and can be cleaned.</div>
+<div id="drop"><div class="ic">📄</div><p><b>Tap to upload or drag & drop</b></p><input type="file" id="f" accept=".pdf,.csv,.txt,.xlsx,.xls" hidden></div>
+<div class="err" id="ue"></div><button class="btn full" id="last" style="display:none">📂 Open my last file</button><button class="btn ghost full" id="demo">Try sample data (messy example)</button></div></section>
+
+<section id="db" class="screen"><div class="top" style="justify-content:flex-end"><button class="btn ghost" id="th">🌓 Theme</button><button class="btn ghost" onclick="show('up')">📤 New file</button></div><div class="app">
+<aside class="side card"><div class="logo">✨ DataMind AI</div><div class="mut" id="fn" style="margin:4px 0 10px"></div>
+<button class="btn full" onclick="summary()">📋 View Summary</button>
+<div class="mut" style="margin-top:12px">Menu</div>
+<div class="nav"><button id="m_v1" class="on" onclick="go2('v1')">📊 Overview</button><button id="m_st" onclick="go2('st')">📐 Statistics</button><button id="m_dq" onclick="go2('dq')">🧹 Data quality</button></div>
+<div class="mut">Graphs – click to customize</div><div class="nav" id="gn"></div>
+<div class="card" style="padding:12px;background:var(--bg);box-shadow:none"><b id="sl">Chart</b>
+<div class="mut">Chart type</div><select id="ty"><option value="bar">Bar</option><option value="line">Line</option><option value="doughnut">Doughnut</option><option value="radar">Radar</option></select>
+<div class="mut">Color combination</div><div class="sw" id="sw"></div>
+<label class="mut"><input type="checkbox" id="lg"> Show legend</label><br><button class="btn ghost full" id="all">Apply colors to all graphs</button></div>
+<div class="mut" style="margin-top:10px">Data columns</div><div class="row"><select id="lc"></select><select id="vc"></select></div>
+<button class="btn ghost full" onclick="out()">Logout</button></aside>
+<main><div id="v1"><div id="ov" class="kpis"></div><div class="cg" id="cg"></div></div>
+<div class="card rv" id="st" style="display:none"><b>📐 Statistics</b><table id="stt"></table></div>
+<div class="card rv" id="dq" style="margin-top:14px;display:none"></div></main></div></section>
+
+<div id="md"><div class="card" id="mb"></div></div>
+<div id="gen"><div class="ring"></div><h3 id="gt">Reading your data…</h3><div class="bar"><i id="gb"></i></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const $=id=>document.getElementById(id),mem={};
+const LS={get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):mem[k]||null}catch(e){return mem[k]||null}},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
+let cur=null,reg=false,S=null,K={},R=[],ch={},sel=0,CF=[];
+const NEG=/return|refund|discount|expense|cost|loss|tax/i;
+const P=[['#7c6cf0','#5ec2d6','#f7a8c4','#ffd58a','#8fe0b5','#b8a9ff'],['#ff9a8b','#ffc78e','#ffe29a','#f7a8c4','#c8a2f0','#ff8fab'],['#5ec2d6','#34c38f','#a0e7e5','#b4f8c8','#7ab8f5','#9bd1b8'],['#3b3f73','#6c63ff','#9d94ff','#c7c2ff','#ff8fab','#ffd1dc']];
+const sm=a=>a.reduce((x,y)=>x+y,0),mean=a=>a.length?sm(a)/a.length:0;
+const med=a=>{if(!a.length)return 0;const b=[...a].sort((x,y)=>x-y),m=b.length>>1;return b.length%2?b[m]:(b[m-1]+b[m])/2};
+const mode=a=>{const c={};let best=null,n=1;a.forEach(x=>{c[x]=(c[x]||0)+1;if(c[x]>n){n=c[x];best=x}});return best};
+const std=a=>{const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
+const fm=n=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:2}),cu=n=>'₹'+fm(n);
+/* ---------- auth ---------- */
+$('tL').onclick=()=>tab(false);$('tR').onclick=()=>tab(true);
+function tab(r){reg=r;$('tL').classList.toggle('on',!r);$('tR').classList.toggle('on',r);$('nm').style.display=r?'block':'none';$('go').textContent=r?'Create account':'Login';$('er').textContent=''}
+$('go').onclick=()=>{const e=$('em').value.trim().toLowerCase(),p=$('pw').value,n=$('nm').value.trim(),u=LS.get('dm_users')||[];
+ if(!e||p.length<4)return $('er').textContent='Please enter a valid email and a password of 4+ characters.';
+ if(reg){if(!n)return $('er').textContent='Please enter your name.';if(u.find(x=>x.e===e))return $('er').textContent='Email already registered.';u.push({e,p:btoa(p),n});LS.set('dm_users',u);enter({e,n})}
+ else{const x=u.find(x=>x.e===e&&x.p===btoa(p));if(!x)return $('er').textContent='Incorrect email or password. Please try again or register.';enter({e,n:x.n})}};
+function enter(u){resetState();cur=u;LS.set('dm_cur',u);$('who').textContent='👋 '+u.n;const d=LS.get('dm_d_'+u.e);
+ $('last').style.display=d?'block':'none';show('up')}
+function resetState(){Object.values(ch).forEach(c=>c&&c.destroy());ch={};S=null;K={};R=[];CF=[];sel=0;['ov','cg','stt','dq','gn','sw'].forEach(id=>{$(id).innerHTML=''});$('fn').textContent='';$('who').textContent='';try{getSelection().removeAllRanges();document.activeElement&&document.activeElement.blur()}catch(e){}closeM();$('gen').classList.remove('on');$('ue').textContent='';$('er').textContent='';['em','pw','nm'].forEach(id=>{$(id).value=''});go2('v1')}
+function out(){resetState();cur=null;LS.del('dm_cur');show('auth')}
+/* ---------- parsing ---------- */
+const num=x=>{if(typeof x==='number')return isFinite(x)?x:null;if(typeof x!=='string')return null;let s=x.trim();if(!s||/^[0-9]{1,4}[-/.][0-9]{1,2}[-/.][0-9]{1,4}$/.test(s))return null;const ng=/^[(]|^-/.test(s);s=s.replace(/^-|[₹$€£,() %]/g,'');return /^[0-9]+([.][0-9]+)?$/.test(s)?(ng?-1:1)*+s:null};
+function txtGrid(t){const tab=String.fromCharCode(9);return t.split(String.fromCharCode(10)).map(l=>{l=l.trim();if(!l)return null;l=l.split(tab).join('|');if(l.includes('|')||l.includes(';'))return l.split(/[|;]/).map(x=>x.trim());const out=[];let w=[];l.split(' ').filter(x=>x).forEach(x=>{if(num(x)!==null){if(w.length)out.push(w.join(' '));w=[];out.push(x)}else w.push(x)});if(w.length)out.push(w.join(' '));return out}).filter(r=>r&&r.length)}
+const isTot=r=>/^(grand total|total|subtotal|sub total|sum)/.test(String(r.find(c=>num(c)===null&&String(c).trim())||'').trim().toLowerCase());
+function qual(){const q={n:S.rows.length,miss:0,bad:0,dup:0,neg:0,tot:0},seen=new Set();
+ S.rows.forEach(r=>{const c=r[S.vc],b=String(c??'').trim();if(isTot(r))q.tot++;else if(b==='')q.miss++;else{const v=num(c);if(v===null)q.bad++;else if(v<0)q.neg++}const k=JSON.stringify(r);if(seen.has(k))q.dup++;seen.add(k)});
+ q.issues=q.miss+q.bad+q.dup+q.tot;return q}
+function clean(){const seen=new Set();S.rows=S.rows.filter(r=>{const k=JSON.stringify(r);if(seen.has(k)||isTot(r)||num(r[S.vc])===null)return false;seen.add(k);return true});S.cl=true}
+function prep(name,grid){
+ grid=grid.map(r=>r.map(c=>c instanceof Date?c.toISOString().slice(0,10):(c==null?'':c))).filter(r=>r.some(c=>String(c).trim()!==''));
+ const n=Math.max(0,...grid.map(r=>r.length));
+ const st=grid.findIndex((r,i)=>r.some(c=>num(c)!==null)&&grid[i+1]&&grid[i+1].some(c=>num(c)!==null));
+ if(st<0){$('ue').textContent='No numeric data found in this file.';return false}
+ const hd=st>0&&grid[st-1].every(c=>num(c)===null)?grid[st-1].map(String):null;
+ const rows=grid.slice(st).map(r=>Array.from({length:n},(_,j)=>r[j]??''));
+ const hw=hd&&hd.length===1?hd[0].split(' ').filter(x=>x):null;
+ const H=Array.from({length:n},(_,i)=>(hd&&hd.length>1&&String(hd[i]||'').trim())||(hw&&hw.length===n&&hw[i])||'Column '+(i+1));
+ const cols=Array.from({length:n},(_,j)=>{const f=rows.filter(r=>!isTot(r)&&String(r[j]).trim()!=='');const k=f.filter(r=>num(r[j])!==null);return{j,numeric:f.length>0&&k.length/f.length>=.6&&k.length>=2,sum:k.reduce((a,r)=>a+Math.abs(num(r[j])),0),has:f.length>0}});
+ const nc=cols.filter(c=>c.numeric);if(!nc.length){$('ue').textContent='No numeric column found in this file.';return false}
+ const pv=nc.find(c=>/sales|revenue|amount|total|price|value|net|profit|income/i.test(H[c.j]))||nc.reduce((a,b)=>b.sum>a.sum?b:a);
+ const pl=cols.find(c=>!c.numeric&&c.has&&/date|month|name|product|region|category|item|particular|label|day|year/i.test(H[c.j]))||cols.find(c=>!c.numeric&&c.has);
+ S={name,rows,H,nc:nc.map(c=>c.j),lc:pl?pl.j:-1,vc:pv.j,cl:false};return true}
+async function handle(f){if(!f)return;$('ue').textContent='';const t0=Date.now();scanning(f.name);
+ try{let g;if(/[.](xlsx|xls|csv)$/i.test(f.name)){const wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:true});g=[];for(const n of wb.SheetNames){g=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:''});if(g.length>1)break}}
+ else{let t='';if(/[.]pdf$/i.test(f.name)){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;
+  for(let i=1;i<=d.numPages;i++){const c=await(await d.getPage(i)).getTextContent(),L={};c.items.forEach(s=>{const y=Math.round(s.transform[5]/3);(L[y]=L[y]||[]).push([s.transform[4],s.str])});
+   Object.keys(L).sort((a,b)=>b-a).forEach(y=>t+=L[y].sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join(' ')+String.fromCharCode(10))}}else t=await f.text();g=txtGrid(t)}
+ const ok=prep(f.name,g);await new Promise(r=>setTimeout(r,Math.max(0,2600-(Date.now()-t0))));if(ok)uploaded();else closeM()}catch(e){closeM();$('ue').textContent='Could not read the file. Please try another file (text-based PDF).'}}
+const drop=$('drop');drop.onclick=()=>$('f').click();drop.ondragover=e=>{e.preventDefault();drop.classList.add('h')};drop.ondragleave=()=>drop.classList.remove('h');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('h');handle(e.dataTransfer.files[0])};$('f').onchange=e=>{handle(e.target.files[0]);e.target.value=''};
+$('demo').onclick=()=>{if(prep('Sample_Sales.xlsx',txtGrid("Month Sales\nJan 12000\nFeb 15500\nMar 14200\nApr 18800\nMay 21000\nJun 19500\nJul 23400\nAug n/a\nSep 22800\nOct 27600\nOct 27600\nReturns 4200\nDiscount 3100\nNov 30200\nDec 33800\nTotal 280000")))scanThen()};
+function scanThen(){scanning('Sample_Sales.xlsx');setTimeout(uploaded,2600)}
+$('last').onclick=()=>{const d=LS.get('dm_d_'+cur.e);if(!d)return;S=d;CF=LS.get('dm_cf_'+cur.e)||defCF();if(!start())show('up')};
+/* ---------- upload popup + generate ---------- */
+function scanning(n){modal(`<div style="text-align:center"><h2 style="margin:0">🔍 Scanning your file…</h2><p class="mut">${n}</p><div class="scan"></div><div class="bar" style="margin:8px auto;background:var(--bd)"><i id="sb"></i></div><div class="mut" id="stx">Uploading file…</div></div>`);
+ const T=['Uploading file…','Scanning rows & columns…','Detecting numeric data…','Checking data quality…'];let i=0;$('sb').style.width='10%';const t=setInterval(()=>{if(!$('sb')){clearInterval(t);return}i++;$('stx').textContent=T[Math.min(i,3)];$('sb').style.width=Math.min(100,i*30)+'%'},600)}
+function modal(h){$('mb').innerHTML=h;$('md').classList.add('on')}function closeM(){$('md').classList.remove('on')}
+function uploaded(){const q=qual();let h=`<h2 style="margin:0">✅ File uploaded successfully</h2><p class="mut">${S.name} • ${q.n} data rows detected</p>`;
+ if(q.issues)h+=`<p><b>⚠ Your data is messy.</b> Found:</p><div><span class="tag">${q.miss} missing values</span><span class="tag">${q.bad} invalid values</span><span class="tag">${q.dup} duplicate rows</span><span class="tag">${q.tot} total rows</span></div><p class="mut">Cleaning removes these rows so totals are accurate.</p><button class="btn full" onclick="goG(true)">✨ Clean data & generate dashboard</button><button class="btn ghost full" onclick="goG(false)">Continue without cleaning</button>`;
+ else h+=`<p>🎉 Your data looks clean. No problems found.</p><button class="btn full" onclick="goG(false)">Generate dashboard</button>`;modal(h)}
+function goG(c){closeM();if(c)clean();LS.set('dm_d_'+cur.e,S);CF=defCF();LS.set('dm_cf_'+cur.e,CF);
+ const T=['Reading your data…','Detecting columns…','Calculating totals & trends…','Building your graphs…','Almost ready…'];let i=0;$('gen').classList.add('on');$('gb').style.width='5%';$('gt').textContent=T[0];
+ const t=setInterval(()=>{i++;$('gt').textContent=T[Math.min(i,4)];$('gb').style.width=Math.min(100,i*22)+'%'},550);
+ setTimeout(()=>{clearInterval(t);$('gen').classList.remove('on');if(!start())show('up')},2800)}
+/* ---------- dashboard ---------- */
+const defCF=()=>[['c1','Sales by label','bar'],['c2','Sales trend','line'],['c3','Share of sales','doughnut'],['c4','Cumulative sales','line'],['c5','Sales vs average','line'],['c6','Gross, deductions & net','bar']].map((x,i)=>({id:x[0],t:x[1],ty:x[2],pal:i%4,lg:x[2]==='doughnut'}));
+function build(){const L=S.lc,V=S.vc,m=new Map();
+ S.rows.forEach((r,i)=>{if(isTot(r))return;const v=num(r[V]);if(v===null)return;const l=L>=0?(String(r[L]).trim()||'Row '+(i+1)):'Row '+(i+1);const o=m.get(l)||{l,v:0};o.v+=v;m.set(l,o)});
+ R=[...m.values()].map(o=>({l:o.l,v:Math.abs(o.v),neg:NEG.test(o.l)||o.v<0}));if(R.length&&R.every(r=>r.neg))R.forEach(r=>r.neg=false);
+ const s=R.filter(r=>!r.neg),d=R.filter(r=>r.neg);if(s.length<2)return false;
+ const v=s.map(r=>r.v),gross=sm(v),ded=sm(d.map(r=>r.v)),h=Math.floor(v.length/2)||1,a1=mean(v.slice(0,h)),a2=mean(v.slice(h));
+ K={s,d,v,gross,ded,net:gross-ded,avg:mean(v),med:med(v),mo:mode(v),sd:std(v),ch:a1?(a2-a1)/a1*100:0,max:s.reduce((a,b)=>b.v>a.v?b:a),min:s.reduce((a,b)=>b.v<a.v?b:a)};return true}
+function start(){if(!build())return false;$('fn').textContent='📁 '+S.name;show('db');
+ $('lc').innerHTML='<option value="-1">(Row number)</option>'+S.H.map((h,i)=>`<option value="${i}">${h}</option>`).join('');$('vc').innerHTML=S.nc.map(j=>`<option value="${j}">${S.H[j]}</option>`).join('');$('lc').value=S.lc;$('vc').value=S.vc;
+ const up=K.ch>=0,k=[['Total Sales',cu(K.gross),''],['Average',cu(K.avg),''],['Median',cu(K.med),''],['Net Amount',cu(K.net),''],['Trend',(up?'▲ UP ':'▼ DOWN ')+Math.abs(K.ch).toFixed(1)+'%',up?'up':'dn']];
+ $('ov').innerHTML=k.map(x=>`<div class="card kpi rv"><span>${x[0]}</span><b class="${x[2]}">${x[1]}</b></div>`).join('');
+ $('cg').innerHTML=CF.map((c,i)=>`<div class="card cc rv" id="k${i}" onclick="pickC(${i})"><b>${c.t}</b><div class="cw"><canvas id="${c.id}"></canvas></div></div>`).join('');
+ $('gn').innerHTML=CF.map((c,i)=>`<button id="n${i}" onclick="pickC(${i},1)">${c.t}</button>`).join('');
+ $('sw').innerHTML=P.map((p,i)=>`<button data-i="${i}" style="background:linear-gradient(90deg,${p[0]},${p[1]},${p[2]})"></button>`).join('');
+ document.querySelectorAll('#sw button').forEach(b=>b.onclick=()=>{CF[sel].pal=+b.dataset.i;upd()});
+ const mo=K.mo===null?'No repeating value':cu(K.mo),vs=K.v;
+ $('stt').innerHTML=[['Count (rows)',vs.length],['Sum / Add',cu(K.gross)],['Mean / Average',cu(K.avg)],['Median',cu(K.med)],['Mode',mo],['Minimum',cu(K.min.v)],['Maximum',cu(K.max.v)],['Range',cu(K.max.v-K.min.v)],['Std deviation',cu(K.sd)],['Deductions',cu(K.ded)],['Net amount',cu(K.net)]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join('');
+
+ dq();go2('v1');CF.forEach((c,i)=>draw(i));pickC(Math.min(sel,CF.length-1));
+ document.querySelectorAll('.rv').forEach((e,i)=>e.style.animationDelay=Math.min(i*.07,1)+'s');return true}
+function dq(){const q=qual(),ok=!q.issues;$('dq').innerHTML=`<b>🧹 Data quality</b> <span class="tag">${ok?'✅ Clean':'⚠ Messy'}</span><div style="margin:8px 0"><span class="tag">${q.n} rows</span><span class="tag">${q.miss} missing</span><span class="tag">${q.bad} invalid</span><span class="tag">${q.dup} duplicates</span><span class="tag">${q.tot} total rows</span><span class="tag">${q.neg} negative</span>${S.cl?'<span class="tag">✨ Cleaned</span>':''}</div>`+(ok?'<div class="mut">No problems found in this file.</div>':'<button class="btn" onclick="clean();LS.set(\'dm_d_\'+cur.e,S);start()">✨ Clean data now</button>')}
+const FN={SUM:[a=>sm(a),1],ADD:[a=>sm(a),1],SUBTOTAL:[a=>sm(a),1],AVERAGE:[mean,1],MEDIAN:[med,1],MODE:[a=>mode(a),1],MIN:[a=>Math.min(...a),1],MAX:[a=>Math.max(...a),1],COUNT:[a=>a.length,0],STDEV:[std,1]};
+const _unused=()=>{const a=K.v.slice(Math.max(0,(+$('fa').value||1)-1),+$('fb').value||K.v.length);if(!a.length)return $('fo').textContent='No rows in range';
+ const [f,c]=FN[$('fx').value],r=f(a);$('fo').textContent=r===null?'No repeating value':c?cu(r):fm(r)};
+function cd(id){const s=K.s.length>40?K.s.slice(0,40):K.s,L=s.map(r=>r.l),V=s.map(r=>r.v);let c=0;
+ if(id==='c1')return{l:L,d:[{label:'Sales',data:V}]};if(id==='c2')return{l:L,d:[{label:'Trend',data:V,fill:true,tension:.4}]};
+ if(id==='c3'){const t=[...K.s].sort((a,b)=>b.v-a.v),o=sm(t.slice(6).map(r=>r.v));return{l:[...t.slice(0,6).map(r=>r.l),...(o?['Others']:[])],d:[{data:[...t.slice(0,6).map(r=>r.v),...(o?[o]:[])]}]}}
+ if(id==='c4')return{l:L,d:[{label:'Cumulative',data:V.map(v=>c+=v),fill:true,tension:.3}]};
+ if(id==='c5')return{l:L,d:[{label:'Sales',data:V},{label:'Average',data:V.map(()=>K.avg),borderDash:[6,4],pointRadius:0}]};
+ return{l:['Gross','Deductions','Net'],d:[{label:'Amount',data:[K.gross,K.ded,K.net]}]}}
+function draw(i){const c=CF[i],x=cd(c.id),pie=c.ty==='doughnut',p=P[c.pal],tc=getComputedStyle(document.body).color;
+ x.d.forEach((d,k)=>{if(pie)d.backgroundColor=[...p,...p];else{const col=p[k%p.length];d.borderColor=col;d.borderWidth=2;d.borderRadius=8;d.backgroundColor=k>0?'transparent':(c.ty==='bar'?p.map(z=>z+'cc'):col+'33')}});
+ if(ch[c.id])ch[c.id].destroy();
+ ch[c.id]=new Chart($(c.id),{type:c.ty,data:{labels:x.l,datasets:x.d},options:{responsive:true,maintainAspectRatio:false,animation:{duration:900},plugins:{legend:{display:c.lg,labels:{color:tc}}},scales:pie||c.ty==='radar'?{}:{x:{ticks:{color:tc},grid:{display:false}},y:{ticks:{color:tc},grid:{color:'rgba(150,150,180,.15)'}}}}})}
+function pickC(i,scroll){if(scroll)go2('v1');sel=i;CF.forEach((c,k)=>{$('k'+k).classList.toggle('sel',k===i);$('n'+k).classList.toggle('on',k===i)});const c=CF[i];$('sl').textContent='🎨 '+c.t;$('ty').value=c.ty;$('lg').checked=c.lg;
+ document.querySelectorAll('#sw button').forEach(b=>b.classList.toggle('on',+b.dataset.i===c.pal));if(scroll)$('k'+i).scrollIntoView({behavior:'smooth',block:'center'})}
+function upd(){draw(sel);pickC(sel);LS.set('dm_cf_'+cur.e,CF)}
+$('ty').onchange=()=>{CF[sel].ty=$('ty').value;upd()};$('lg').onchange=()=>{CF[sel].lg=$('lg').checked;upd()};
+$('all').onclick=()=>{CF.forEach(c=>c.pal=CF[sel].pal);CF.forEach((c,i)=>draw(i));pickC(sel);LS.set('dm_cf_'+cur.e,CF)};
+function colChg(){S.lc=+$('lc').value;S.vc=+$('vc').value;LS.set('dm_d_'+cur.e,S);start()}$('lc').onchange=colChg;$('vc').onchange=colChg;
+let vw='v1';function go2(id){const was=vw;vw=id;['v1','st','dq'].forEach(x=>{$(x).style.display=x===id?'':'none';$('m_'+x).classList.toggle('on',x===id)});if(id==='v1'&&was!=='v1'&&K.s)CF.forEach((c,i)=>draw(i))}
+function summary(){const up=K.ch>=0,q=qual();modal(`<h2 style="margin:0">📋 Overall short summary</h2><p class="mut">${S.name}</p><ul class="sm">
+<li>Total sales are <b>${cu(K.gross)}</b> across ${K.v.length} entries, with an average of <b>${cu(K.avg)}</b> and a median of ${cu(K.med)}.</li>
+<li>Deductions are ${cu(K.ded)}, so the net amount is <b>${cu(K.net)}</b>.</li>
+<li>Sales are <b class="${up?'up':'dn'}">${up?'UP ▲':'DOWN ▼'} ${Math.abs(K.ch).toFixed(1)}%</b> in the second half compared with the first half.</li>
+<li>Highest: ${K.max.l} (${cu(K.max.v)}). Lowest: ${K.min.l} (${cu(K.min.v)}).</li>
+<li>Most common value (mode): ${K.mo===null?'none, all values are different':cu(K.mo)}. Std deviation: ${cu(K.sd)}.</li>
+<li>Data quality: ${q.issues?q.issues+' issue(s) found, cleaning is recommended.':'clean, no issues.'}</li></ul><button class="btn full" onclick="closeM()">Close</button>`)}
+$('md').onclick=e=>{if(e.target.id==='md')closeM()};
+$('th').onclick=()=>{const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark';if(K.s)CF.forEach((c,i)=>draw(i))};
+
+</script></body></html>
